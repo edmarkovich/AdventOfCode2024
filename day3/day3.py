@@ -3,22 +3,16 @@ import re
 
 def do_mult(instruction):
     pattern =r"(\d+)"
-    matches = re.findall(pattern, instruction)
-    matches = list(map(lambda x: int(x), matches))
+    matches = [int(x) for x in re.findall(pattern, instruction)]
     return matches[0] * matches[1]
 
 with open("day3.in","r") as f:
-    total=0
-    lines = f.read().replace('\n','')
-    pattern = r"(mul\([0-9]+,[0-9]+\))"
-    ignore = r"don't\(\)(.+?)do\(\)"
-    ignore_eol = r"don't\(\)(.+?)$"
-    line = lines
-    line = re.sub(ignore,"", line)
-    line = re.sub(ignore_eol,"", line)
-    matches = re.findall(pattern,line)
-    matches = map(lambda x: do_mult(x), matches)
-    total += sum(matches)
+    line = f.read().replace('\n','')
 
-    print(total)
-    
+ignore = r"don't\(\)(.+?)(do\(\)|$)"
+line = re.sub(ignore,"", line)
+
+pattern = r"(mul\(\d+,\d+\))"
+matches = [do_mult(x) for x in re.findall(pattern,line)]
+
+print( sum(matches))
