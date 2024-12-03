@@ -1,18 +1,11 @@
 import re
 
-
 def do_mult(instruction):
-    pattern =r"(\d+)"
-    matches = [int(x) for x in re.findall(pattern, instruction)]
+    matches = [int(x) for x in re.findall(r"(\d+)", instruction)]
     return matches[0] * matches[1]
 
-with open("day3.in","r") as f:
-    line = f.read().replace('\n','')
+line = open("day3.in").read().replace("\n","")
+line = re.sub(r"don't\(\)(.+?)(do\(\)|$)","", line)
 
-ignore = r"don't\(\)(.+?)(do\(\)|$)"
-line = re.sub(ignore,"", line)
-
-pattern = r"(mul\(\d+,\d+\))"
-matches = [do_mult(x) for x in re.findall(pattern,line)]
-
-print( sum(matches))
+matches = [do_mult(x) for x in re.findall(r"(mul\(\d+,\d+\))",line)]
+print(sum(matches))
