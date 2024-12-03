@@ -9,12 +9,17 @@ def do_mult(instruction):
 
 with open("day3.in","r") as f:
     total=0
-    lines = f.readlines()
+    lines = f.read()
     pattern = r"(mul\([0-9]+,[0-9]+\))"
-    for line in lines:
-        matches = re.findall(pattern,line)
-        matches = map(lambda x: do_mult(x), matches)
-        total += sum(matches)
+    ignore = r"don't\(\)(.+?)do\(\)"
+    ignore_eol = r"don't\(\)(.+?)$"
+    line = lines
+    line = re.sub(ignore,"", line)
+    line = re.sub(ignore_eol,"", line)
+    print(line)
+    matches = re.findall(pattern,line)
+    matches = map(lambda x: do_mult(x), matches)
+    total += sum(matches)
 
     print(total)
     
