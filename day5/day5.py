@@ -2,7 +2,6 @@ import math
 
 lines = open("day5.in").readlines()
 
-
 rules = [x.strip().split("|") for x in lines if "|" in x]
 pages = [x.strip().split(",") for x in lines if "," in x]
 
@@ -12,16 +11,10 @@ def checkRulePattern(rule, pattern):
 
 out = 0
 for p in pages:
-	ok = True
-	for r in rules:
-		if not checkRulePattern(r,p): 
-			ok = False
-			break
-	if not ok: continue
+	if False in [checkRulePattern(r,p) for r in rules]: continue
+
 	idx = math.floor(len(p)/2)
-	tmp = int(p[idx])
-	print(idx, tmp)
-	out += tmp
+	out += int(p[idx])
 
 print(out)
 			
