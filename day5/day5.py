@@ -18,9 +18,7 @@ def checkRulePattern(rule, pattern, fix=False):
 out = 0
 for p in pages:
 	if not False in [checkRulePattern(r,p) for r in rules]: continue
-	passes=0
 	while False in [checkRulePattern(r,p, True) for r in rules]: 
-		passes += 1
 		pass
 
 	idx = math.floor(len(p)/2)
