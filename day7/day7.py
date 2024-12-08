@@ -1,5 +1,6 @@
-from itertools import product
 import operator
+from itertools import product
+from functools import reduce
 
 ops = [operator.add, operator.mul, lambda x,y: int(str(x)+(str(y)))]
 
@@ -9,15 +10,10 @@ def parseLine(line):
 
 def permute(target, ints):
 	for operations in [p for p in product(ops, repeat=len(ints)-1)]:
-		total = ints[0]
-		for o in range(len(operations)):
-			total=operations[o](total, ints[1+o])
-		if total == target: return True
+		total = reduce(lambda x,y: (None, y[0](x[1],y[1])), zip((None,)+operations, ints))
+		if total[1] == target: return True
 	return False
 
-def do():
-	lines = [parseLine(x) for x in open("day7.in").readlines()]
-	out = sum([line[0] for line in lines if permute(line[0], line[1])])
-	print(out)
+lines = [parseLine(x) for x in open("day7.in").readlines()]
+print(sum([line[0] for line in lines if permute(line[0], line[1])]))
 
-do()
